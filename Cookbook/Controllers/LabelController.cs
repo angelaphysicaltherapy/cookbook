@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace Cookbook.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Label>>> GetLabels()
         {
-            return await _context.Labels.ToListAsync();
+            return await _context.Labels.Include(l=>l.Dishes).ToListAsync();
         }
 
         // GET: api/Label/5

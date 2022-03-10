@@ -2,6 +2,7 @@
 using Cookbook.Models;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,8 @@ builder.Services.AddSpaStaticFiles(configuration =>
 {
     configuration.RootPath = "ClientApp/build";
 });
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddDbContext<CookbookContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("CookbookContext")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,7 +24,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSpaStaticFiles();
+// app.UseSpaStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();

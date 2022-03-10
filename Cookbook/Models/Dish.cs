@@ -8,10 +8,9 @@ namespace Cookbook.Models
 	{
         public int Id { get; set; }
         public string Name { get; set; }
-        [Display(Name ="Meal")]
         public int MealId { get; set; }
-        public Meal Meal { get; set; }
-        public List<Label> Labels { get; set; }
+        public Meal? Meal { get; set; }
+        public List<Label>? Labels { get; set; }
     }
 }
 
