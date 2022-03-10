@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +62,7 @@ namespace Cookbook.Controllers
             existing.Name = update.Name;
             await _context.SaveChangesAsync();
 
-            return Ok(existing);
+            return existing;
         }
 
         // POST: api/Dish
@@ -90,7 +89,7 @@ namespace Cookbook.Controllers
             _context.Dishes.Remove(dish);
             await _context.SaveChangesAsync();
 
-            return Ok(dish);
+            return dish;
         }
 
         // PUT: api/Dish/5/Label/1
@@ -104,7 +103,7 @@ namespace Cookbook.Controllers
             }
 
             var label = await _context.Labels.FindAsync(labelId);
-            if(label == null)
+            if (label == null)
             {
                 return NotFound();
             }
@@ -112,7 +111,7 @@ namespace Cookbook.Controllers
             dish.Labels.Add(label);
             await _context.SaveChangesAsync();
 
-            return Ok(dish);
+            return dish;
         }
 
         // POST: api/Dish/5/Label
@@ -125,7 +124,7 @@ namespace Cookbook.Controllers
                 return NotFound();
             }
 
-            if(label.Id != 0)
+            if (label.Id != 0)
             {
                 return BadRequest($"Use the /api/Dish/{dishId}/Label/{label.Id} route to add existing labels");
             }
@@ -133,7 +132,7 @@ namespace Cookbook.Controllers
             dish.Labels.Add(label);
             await _context.SaveChangesAsync();
 
-            return Ok(dish);
+            return dish;
         }
 
         // Delete: api/Dish/5/Label/1
@@ -147,7 +146,7 @@ namespace Cookbook.Controllers
             }
 
             var label = dish.Labels.FirstOrDefault(l => l.Id == labelId);
-            if(label == null)
+            if (label == null)
             {
                 return NotFound();
             }
@@ -155,16 +154,27 @@ namespace Cookbook.Controllers
             dish.Labels.Remove(label);
             await _context.SaveChangesAsync();
 
-            return Ok(dish);
+            return dish;
         }
 
         // GET: api/Dish/random
         [HttpGet("random/{mealId}")]
         public async Task<ActionResult<Dish>> GetRandomDish(int mealId, [FromQuery] int[] labelIds)
         {
-            var dishes = await _context.Dishes.Include(d => d.Meal).Include(d => d.Labels)
-                .Where(d => d.MealId == mealId && d.Labels.Any(l => labelIds.Contains(l.Id)))
-                .ToListAsync();
+            List<Dish> dishes;
+            if (labelIds?.Length > 0)
+            {
+                dishes = await _context.Dishes.Include(d => d.Meal).Include(d => d.Labels)
+                    .Where(d => d.MealId == mealId && d.Labels.Any(l => labelIds.Contains(l.Id)))
+                    .ToListAsync();
+            }
+            else
+            {
+                dishes = await _context.Dishes.Include(d => d.Meal).Include(d => d.Labels)
+                    .Where(d => d.MealId == mealId)
+                    .ToListAsync();
+            }
+
 
             var dish = dishes.OrderBy(d => new Random().NextInt64())
                 .FirstOrDefault();
