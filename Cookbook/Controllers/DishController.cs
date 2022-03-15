@@ -175,8 +175,7 @@ namespace Cookbook.Controllers
                     .ToListAsync();
             }
 
-
-            var dish = dishes.OrderBy(d => new Random().NextInt64())
+            var dish = dishes.OrderBy(_ => new Random().NextInt64())
                 .FirstOrDefault();
             if (dish == null)
             {
