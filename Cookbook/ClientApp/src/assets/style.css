@@ -22,3 +22,7 @@
     display: flex;
     justify-content: space-around;
 }
+
+button .DeleteButton{
+    background-color: red;
+}
