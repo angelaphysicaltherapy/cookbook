@@ -19,17 +19,15 @@ export default function App() {
   return (
     <Router className="App">
       <NavBar />
+
       <Route path="/dish/:id/edit">
         <EditPage />
-      </Route>
-
-      <Route>
-        {/* <DeletePage/> */}
       </Route>
 
       <Route path="/create-dish">
         <CreateDish />
       </Route>
+
       <Route path="/create-label">
         <CreateLabel />
       </Route>
@@ -37,10 +35,12 @@ export default function App() {
       <Route path="/search">
       <Search />
       </Route>
+
       <Route path="/dishes">
       <DishList />
       <LabelList />
       </Route>
+
       <Route path="/" exact>
       <header className="App-header">
         {/* <img src="/logo.png" className="App-logo" alt="logo" /> */}
@@ -48,15 +48,8 @@ export default function App() {
           My Meal Planner
         </h1>
       </header>
-
       </Route>
       
-      
-
-      
-      
-      
-        
   
     </Router>);
 }

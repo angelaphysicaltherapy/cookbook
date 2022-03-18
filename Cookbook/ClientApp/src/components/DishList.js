@@ -21,10 +21,10 @@ export default function DishList() {
 
   useEffect(getDishes, []);
 
-  const handleDelete= async(id)=>{
+  const handleDelete = async (id) => {
     const endpoint = `/api/Dish/${id}`;
     try {
-      const response = await fetch(endpoint, {method: 'DELETE'});
+      const response = await fetch(endpoint, { method: 'DELETE' });
       if (response.ok) {
         // const jsonResponse = await response.json();
         // getDishes();
@@ -32,11 +32,11 @@ export default function DishList() {
         setData(data.filter(f => f.id !== id));
       }
     } catch (error) { console.log(error) };
-};
+  };
 
 
   return (
-    <session >
+    <section >
 
       <h2>All Dishes</h2>
       <div className="DishList">
@@ -72,7 +72,7 @@ export default function DishList() {
             {data.map(dish =>
               <tr>
                 <td><Link to={`/dish/${dish.id}/edit`}><button >Edit</button></Link></td>
-                <td><button onClick={()=>handleDelete(dish.id)}>Delete</button></td>
+                <td><button onClick={() => handleDelete(dish.id)}>Delete</button></td>
 
               </tr>)}
           </tbody>
@@ -80,5 +80,5 @@ export default function DishList() {
         </table>
       </div>
 
-    </session>);
+    </section>);
 }

@@ -1,7 +1,7 @@
 
 import React, { Component, useEffect, useState } from 'react';
 import "../assets/style.css";
-
+import { Link } from 'react-router-dom';
 
 export default function LabelList() {
     const [data, setData] = useState([]);
@@ -17,10 +17,24 @@ export default function LabelList() {
             }
         } catch (error) { console.log(error) };
     };
-    
-    
+
+
 
     useEffect(getLabels, []);
+
+
+    const handleDelete = async (id) => {
+        const endpoint = `/api/Label/${id}`;
+        try {
+            const response = await fetch(endpoint, { method: 'DELETE' });
+            if (response.ok) {
+                // const jsonResponse = await response.json();
+                // getDishes();
+                // return jsonResponse;
+                setData(data.filter(f => f.id !== id));
+            }
+        } catch (error) { console.log(error) };
+    };
 
 
     return (
@@ -62,8 +76,8 @@ export default function LabelList() {
                         {
                             data.map(label =>
                                 <tr key={label.id}>
-                                    <td><button onClick={() => handleEdit(dish.id)}>Edit</button></td>
-                                    <td><button onClick={() => handleDelete(dish.id)}>Delete</button></td>
+                                    <td><Link to={`/dish/${label.id}/edit`}><button >Edit</button></Link></td>
+                                    <td><button onClick={() => handleDelete(label.id)}>Delete</button></td>
                                 </tr>
                             )
                         }
