@@ -76,7 +76,7 @@ export default function LabelList() {
                         {
                             data.map(label =>
                                 <tr key={label.id}>
-                                    <td><Link to={`/dish/${label.id}/edit`}><button >Edit</button></Link></td>
+                                    <td><Link to={`/label/${label.id}/edit`}><button >Edit</button></Link></td>
                                     <td><button onClick={() => handleDelete(label.id)}>Delete</button></td>
                                 </tr>
                             )

@@ -10,6 +10,7 @@ import NavBar from './components/NavBar';
 import CreateDish from './pages/CreateDish';
 import EditPage from './pages/EditPage';
 import CreateLabel from './pages/CreateLabel';
+import EditLabelPage from './pages/EditLabelPage'
 
 
 
@@ -22,6 +23,10 @@ export default function App() {
 
       <Route path="/dish/:id/edit">
         <EditPage />
+      </Route>
+
+      <Route path="/label/:id/edit">
+        <EditLabelPage/>
       </Route>
 
       <Route path="/create-dish">
