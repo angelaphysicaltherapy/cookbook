@@ -5,12 +5,13 @@ import "../assets/style.css";
 
 
 export default function EditPage() {
-    
+
     const options = [
         { value: 1, label: "Breakfast" },
         { value: 2, label: "Lunch" },
         { value: 3, label: "Dinner" },
     ];
+
 
     const { id } = useParams();
 
@@ -18,17 +19,17 @@ export default function EditPage() {
     const [name, setName] = useState();
     const [mealId, setMealId] = useState();
     const [success, setSuccess] = useState(false);
-    const [dishLabels, setDishLabels] = useState([]);
+    const [labels, setLabels] = useState([]);
+
+    // const [dishLabels, setDishLabels] = useState([]);
 
     useEffect(() => {
         setName(dish.name);
         setMealId(dish.mealId);
-        setDishLabels(dish.labels)
+        // setDishLabels(dish.labels)
     }, [dish]);
 
-  
 
-    
 
     const getDish = async () => {
         const endpoint = `/api/Dish/${id}`;
@@ -52,32 +53,40 @@ export default function EditPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, name, mealId })
         }).then(response => setDish(response.json()))
-        .then(setSuccess(true));
-     
+            .then(setSuccess(true));
+
     };
 
-    // const getDishLabels = async () => {
-    //     const endpoint = `/api/Label/${id}`;
-    //     try {
-    //         const response = await fetch(endpoint);
-    //         if (response.ok) {
-    //             const jsonResponse = await response.json();
-    //             setDishLabels(jsonResponse);
-    //         }
-    //     } catch (error) { console.log(error) };
-    // };
-    // useEffect(getDishLabels,[]);
+    const getLabels = async () => {
+        const endpoint = '/api/Label';
+        try {
+            const response = await fetch(endpoint);
+            if (response.ok) {
+                const jsonResponse = await response.json();
+                setLabels(jsonResponse.filter(l=>dish.labels.every(s=>s.id!=l.id)));
+            }
+        } catch (error) { console.log(error) };
+    };
+    useEffect(getLabels,[dish]);
 
-    const handleDelete= async (labelId)=>{
-        
-        // setDishLabels(response.labels)
-        // e.preventDefault();
+    const handleDelete = async (labelId) => {
         const endpoint = `/api/Dish/${id}/Label/${labelId}`;
         fetch(endpoint, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(async (response)=>setDishLabels((await response.json()).labels))
+            // .then(async (response) => setDishLabels((await response.json()).labels))
+            .then(async (response) => setDish(await response.json()))
+    };
+
+    const handleAdd = async (labelId)=>{
+        const endpoint = `/api/Dish/${id}/Label/${labelId}`;
+        fetch(endpoint, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            // .then(async (response) => setDishLabels((await response.json()).labels))
+            .then(async (response) => setDish(await response.json()))
     };
 
     return (
@@ -101,20 +110,22 @@ export default function EditPage() {
                 {success && <h2>Success!</h2>}
             </form>
 
-            
-            <h2>Selected Labels For {dish.name}</h2>
-                
-           
-                {/* {dish.labels?.map(l=> <button onClick={()=>handleDelete(l.id)}>{l.name}</button>)} */}
-                {dishLabels?.map(l=> <button className="DeleteButton" onClick={()=>handleDelete(l.id)}>{l.name}</button>)}
 
-            <h2>Add Labels for {dish.name}</h2>
+            <h2>Selected Labels For {dish.name}</h2>
+
+
+            { dish.labels?.map(l => <button onClick={() => handleDelete(l.id)}>{l.name}</button>) }
+             {/* {dishLabels?.map(l=> <button className="DeleteButton" onClick={()=>handleDelete(l.id)}>{l.name}</button>)} */}
+
+            < h2 > Add Labels for {dish.name}</h2>
+
+            {labels.map(l=><button onClick={()=>handleAdd(l.id)}>{l.name}</button>)}
               
 
            
 
             
-        </div>
+        </div >
 
 
     )
