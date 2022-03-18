@@ -1,0 +1,24 @@
+#logo{
+    max-height: 300px ;
+    max-width: fit-content;
+    opacity: 0.9;
+    
+    
+}
+
+.anqi{
+    background-color: #646283;
+    opacity: 1;
+    
+}
+
+.nav{
+    display: inline;
+    margin-right: 50px;
+}
+
+
+.DishList, .LabelList{
+    display: flex;
+    justify-content: space-around;
+}

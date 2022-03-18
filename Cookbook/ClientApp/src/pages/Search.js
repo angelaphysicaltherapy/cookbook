@@ -80,7 +80,7 @@ export default function Search() {
                         options={labels} 
                         getOptionLabel={l => l.name}
                         getOptionValue={l=>l.id}
-                        onChange={(dudytfdftuyt)=>setSelectLabels(dudytfdftuyt)}
+                        onChange={setSelectLabels}
                         noOptionsMessage={()=>"No matched labels"}
                         components={animatedComponents}
                         theme={customTheme}

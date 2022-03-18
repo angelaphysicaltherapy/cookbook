@@ -1,5 +1,6 @@
 
 import React, { Component, useEffect, useState } from 'react';
+import "../assets/style.css";
 
 
 export default function LabelList() {
@@ -16,35 +17,61 @@ export default function LabelList() {
             }
         } catch (error) { console.log(error) };
     };
+    
+    
 
     useEffect(getLabels, []);
 
 
     return (
-        <div className="LabelList" >
-            <section>
-                <h2>All Labels</h2>
+
+        <section>
+            <h2>All Labels</h2>
+            <div className='LabelList'>
                 <table>
                     <thead>
                         <tr>
                             <th>Label</th>
                             <th>No.</th>
                             <th colSpan={"20"}>Dishes</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            data.map(label=>
+                            data.map(label =>
                                 <tr key={label.id}>
                                     <td>{label.name}</td>
                                     <td>{label.id}</td>
-                                    {label.dishes.map(dish=> <td>{dish.name}</td>)}
+                                    {label.dishes.map(dish => <td>{dish.name}</td>)}
                                 </tr>
-                                )
+                            )
                         }
 
                     </tbody>
                 </table>
-            </section>
-        </div>);
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.map(label =>
+                                <tr key={label.id}>
+                                    <td><button onClick={() => handleEdit(dish.id)}>Edit</button></td>
+                                    <td><button onClick={() => handleDelete(dish.id)}>Delete</button></td>
+                                </tr>
+                            )
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    )
+
 }
