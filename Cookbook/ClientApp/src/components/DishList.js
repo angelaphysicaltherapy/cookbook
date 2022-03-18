@@ -27,10 +27,11 @@ export default function DishList() {
       const response = await fetch(endpoint, {method: 'DELETE'});
       if (response.ok) {
         // const jsonResponse = await response.json();
-        getDishes();
+        // getDishes();
+        // return jsonResponse;
+        setData(data.filter(f => f.id !== id));
       }
     } catch (error) { console.log(error) };
-
 };
 
 

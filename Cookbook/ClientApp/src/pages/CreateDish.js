@@ -13,7 +13,7 @@ export default function CreateDish(){
         {value: 3, label:"Dinner"},
 
     ];
-    const success = false;
+    const [success, setSuccess] = useState(false);
 
 
     const handleName = (e)=>{
@@ -24,19 +24,18 @@ export default function CreateDish(){
         setId(option.value);
     }
 
-    const dish = {id: 0, name: "Tacos", mealId: 2, meal: null,
-    labels: null};
 
 
-    const postDish = async()=>{
+    const postDish = async(e)=>{
         try{
+            e.preventDefault();
             const response = await fetch('/api/Dish', {
                 method:'POST',
-                header: {'Content-Type': 'application/json', 'accept': 'text/plain'},
-                body: JSON.stringify(dish),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, mealId:id}),
             });
             if (response.ok){
-                success = true;
+                setSuccess(true);
             }
             throw new Error ('Request Failed');
             }catch (error){

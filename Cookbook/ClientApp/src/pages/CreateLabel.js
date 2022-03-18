@@ -14,12 +14,13 @@ export default function CreateLabel() {
 
 
 
-    const postLabel = async () => {
+    const postLabel = async (e) => {
         try {
+            e.preventDefault();
             const response = await fetch('/api/Label', {
                 method: 'POST',
-                // header: { 'Content-Type': 'application/json', 'accept': 'text/plain' },
-                body: JSON.stringify({id: 0,name: name}),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({name: name}),
             });
             if (response.ok) {
                 success = true;
@@ -37,7 +38,7 @@ export default function CreateLabel() {
             <h1>Create a New Label</h1>
             <form onSubmit={postLabel}>
                 <label>Name</label>
-                <input required type="text" placeholder='tyle a label here...' onChange={handleName} />
+                <input required type="text" placeholder='tyle a label here...' value={name} onChange={handleName} />
                 <br />
                 <button type="submit" value="Submit" >Submit</button>
             </form>

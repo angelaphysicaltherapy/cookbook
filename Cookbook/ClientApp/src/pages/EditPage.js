@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Select from 'react-select';
 
+
 export default function EditPage() {
     const [dish, setDish] = useState({});
     const [name, setName] = useState();
@@ -32,7 +33,8 @@ export default function EditPage() {
 
     useEffect(getDish, [id]);
 
-    const updateDish = async () => {
+    const updateDish = async (e) => {
+        e.preventDefault();
         const endpoint = `/api/Dish/${id}`;
         fetch(endpoint, {
             method: 'PUT',

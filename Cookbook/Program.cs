@@ -59,6 +59,10 @@ using (var scope = app.Services.CreateScope())
             new Meal() {Id = 3, Name = "Dinner"}
         });
 
+        var vegetarian = new Label() {Name = "Vegetarian"};
+        context.Labels.Add(vegetarian);
+        context.SaveChanges();
+
         context.Dishes.AddRange(new Dish[]
         {
             new Dish(){
@@ -67,7 +71,7 @@ using (var scope = app.Services.CreateScope())
             Labels = new List<Label>
                 {
                 new Label() {Name = "Stir fry"},
-                new Label() {Name = "Vegetarian"},
+                vegetarian,
                 new Label() {Name = "Quickdish"}
                 }
             },
@@ -78,16 +82,11 @@ using (var scope = app.Services.CreateScope())
                 // Labels = [{name:"Vegetarian", id : 3}, new Label() {Name="Blue"}]
                 Labels = new List<Label>
                 {
-                    new Label() {Name = "Vegetarian"},
+                    vegetarian,
                     new Label() {Name="Blue"}
 
                 }
-
-
-
             }
-
-
         });
 
         context.SaveChanges();

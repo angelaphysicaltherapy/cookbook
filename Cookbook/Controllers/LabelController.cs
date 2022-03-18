@@ -81,7 +81,7 @@ namespace Cookbook.Controllers
             _context.Labels.Add(label);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLabel", new { id = label.Id }, label);
+            return CreatedAtAction(nameof(GetLabel), new { id = label.Id }, label);
         }
 
         // DELETE: api/Label/5
