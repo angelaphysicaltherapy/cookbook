@@ -7,6 +7,7 @@ export default function EditPage() {
     const [dish, setDish] = useState({});
     const [name, setName] = useState();
     const [mealId, setMealId] = useState();
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         setName(dish.name);
@@ -40,7 +41,9 @@ export default function EditPage() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, name, mealId })
-        }).then(response => setDish(response.json()));
+        }).then(response => setDish(response.json()))
+        .then(setSuccess(true));
+        
 
         
     };
@@ -64,6 +67,8 @@ export default function EditPage() {
                 />
                 <button type="submit" value="Submit">Submit</button>
             </form>
+
+            {success && <h2>Success!</h2>}
 
 
 

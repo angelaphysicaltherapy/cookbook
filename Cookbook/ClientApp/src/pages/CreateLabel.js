@@ -5,7 +5,7 @@ import "../assets/style.css"
 
 export default function CreateLabel() {
     const [name, setName] = useState();
-    const success = false;
+    const [success, setSuccess] = useState(false);
 
 
     const handleName = (e) => {
@@ -23,7 +23,7 @@ export default function CreateLabel() {
                 body: JSON.stringify({name: name}),
             });
             if (response.ok) {
-                success = true;
+                setSuccess(true);
             }
             throw new Error('Request Failed');
         } catch (error) {
@@ -44,7 +44,7 @@ export default function CreateLabel() {
             </form>
             <br />
 
-            {success && <div>Success!</div>}
+            {success && <h2>Success!</h2>}
 
 
 
