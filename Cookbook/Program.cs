@@ -22,7 +22,6 @@ builder.Services.AddSwaggerGen();
 // Configure the HTTP request pipeline.
 var app = builder.Build();
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 // app.UseSpaStaticFiles();
 
