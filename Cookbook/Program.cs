@@ -22,8 +22,8 @@ builder.Services.AddSwaggerGen();
 // Configure the HTTP request pipeline.
 var app = builder.Build();
 
-app.UseStaticFiles();
-// app.UseSpaStaticFiles();
+// app.UseStaticFiles();
+app.UseSpaStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
@@ -37,10 +37,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseSpa(spa =>
 {
-    spa.Options.SourcePath = "ClientApp";
+    spa.Options.SourcePath = "ClientApp/build";
 
     if (app.Environment.IsDevelopment())
     {
+        spa.Options.SourcePath = "ClientApp";
         spa.UseReactDevelopmentServer(npmScript: "start");
     }
 });
